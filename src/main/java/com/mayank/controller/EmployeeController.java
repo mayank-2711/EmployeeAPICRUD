@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mayank.model.Employee;
@@ -71,5 +72,17 @@ public class EmployeeController {
 		employeeRepository.deleteAll();
 		return "All Employees deleted Successfully..";
 	}
+	
+	@GetMapping("/employees/city")
+    public ResponseEntity<List<Employee>> getEmployeesByCity(@RequestParam String emp_city) {
+        List<Employee> employees = employeeRepository.findByEmp_city(emp_city);
+        return new ResponseEntity<>(employees, HttpStatus.OK);
+    }
+
+    @GetMapping("/employees/age")
+    public ResponseEntity<List<Employee>> getEmployeesByAge(@RequestParam Integer emp_age) {
+        List<Employee> employees = employeeRepository.findByEmp_ageGreaterThanEqual(emp_age);
+        return new ResponseEntity<>(employees, HttpStatus.OK);
+    }
 		
 }
